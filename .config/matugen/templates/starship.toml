@@ -1,0 +1,189 @@
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](seg1)\
+$os\
+$username\
+[](fg:seg1 bg:seg2)\
+$directory\
+[](fg:seg2 bg:seg3)\
+$git_branch\
+$git_status\
+[](fg:seg3 bg:seg4)\
+$c\
+$cpp\
+$rust\
+$golang\
+$nodejs\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:seg4 bg:seg5)\
+$docker_context\
+$conda\
+$pixi\
+[](fg:seg5 bg:seg6)\
+$time\
+[ ](fg:seg6)\
+$line_break$character"""
+
+palette = 'matugen'
+
+[palettes.matugen]
+# Segment backgrounds & their matching on_* text colors
+seg1      = '{{colors.primary.default.hex}}'
+seg1_text = '{{colors.on_primary.default.hex}}'
+seg2      = '{{colors.secondary.default.hex}}'
+seg2_text = '{{colors.on_secondary.default.hex}}'
+seg3      = '{{colors.tertiary.default.hex}}'
+seg3_text = '{{colors.on_tertiary.default.hex}}'
+seg4      = '{{colors.primary_container.default.hex}}'
+seg4_text = '{{colors.on_primary_container.default.hex}}'
+seg5      = '{{colors.secondary_container.default.hex}}'
+seg5_text = '{{colors.on_secondary_container.default.hex}}'
+seg6      = '{{colors.surface_container_highest.default.hex}}'
+seg6_text = '{{colors.on_surface_variant.default.hex}}'
+# Character & status colors
+col_green  = '{{colors.primary.default.hex}}'
+col_red    = '{{colors.error.default.hex}}'
+col_purple = '{{colors.tertiary.default.hex}}'
+col_yellow = '{{colors.secondary.default.hex}}'
+
+[os]
+disabled = false
+style = "bg:seg1 fg:seg1_text"
+
+[os.symbols]
+Windows = "󰍲"
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = "󰣇"
+Artix = "󰣇"
+EndeavourOS = ""
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+Pop = ""
+
+[username]
+show_always = true
+style_user = "bg:seg1 fg:seg1_text"
+style_root = "bg:seg1 fg:col_red"
+format = '[ $user ]($style)'
+
+[directory]
+style = "fg:seg2_text bg:seg2"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:seg3"
+format = '[[ $symbol $branch ](fg:seg3_text bg:seg3)]($style)'
+
+[git_status]
+style = "bg:seg3"
+format = '[[($all_status$ahead_behind )](fg:seg3_text bg:seg3)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[c]
+symbol = " "
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[cpp]
+symbol = " "
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[php]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[java]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[python]
+symbol = ""
+style = "bg:seg4"
+format = '[[ $symbol( $version) ](fg:seg4_text bg:seg4)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:seg5"
+format = '[[ $symbol( $context) ](fg:seg5_text bg:seg5)]($style)'
+
+[conda]
+style = "bg:seg5"
+format = '[[ $symbol( $environment) ](fg:seg5_text bg:seg5)]($style)'
+
+[pixi]
+style = "bg:seg5"
+format = '[[ $symbol( $version)( $environment) ](fg:seg5_text bg:seg5)]($style)'
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:seg6"
+format = '[[  $time ](fg:seg6_text bg:seg6)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[](bold fg:col_green)'
+error_symbol   = '[](bold fg:col_red)'
+vimcmd_symbol  = '[](bold fg:col_green)'
+vimcmd_replace_one_symbol = '[](bold fg:col_purple)'
+vimcmd_replace_symbol     = '[](bold fg:col_purple)'
+vimcmd_visual_symbol      = '[](bold fg:col_yellow)'

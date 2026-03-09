@@ -1,0 +1,107 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 32,
+    "spacing": 12,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+
+    "modules-left": [
+        "niri/workspaces",
+        "custom/niri-scroll",
+        "mpd"
+    ],
+    "modules-center": [
+        "clock"
+    ],
+    "modules-right": [
+        "group/hardware",
+        "custom/warp",
+        "network",
+        "bluetooth"
+    ],
+
+    // --- LEFT MODULES ---
+    "niri/workspaces": {
+        "format": "{icon}",
+        "format-icons": {
+            "active": "●",
+            "default": "○"
+        }
+    },
+    "custom/niri-scroll": {
+        "exec": "~/.config/waybar/scripts/niri-scroll.sh",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
+    },
+    "mpd": {
+        "format": "{stateIcon} {artist} - {title}",
+        "format-disconnected": "󰎆 Disconnected",
+        "format-stopped": "󰎆 Stopped",
+        "state-icons": {
+            "paused": "",
+            "playing": ""
+        },
+        "tooltip-format": "MPD (connected)",
+        "on-click": "mpc toggle"
+    },
+
+    // --- CENTER MODULES ---
+    "clock": {
+        "format": "{:%H:%M}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%A, %B %d}"
+    },
+
+    // --- RIGHT MODULES ---
+    "group/hardware": {
+        "orientation": "inherit",
+        "drawer": {
+            "transition-duration": 300,
+            "transition-left-to-right": false
+        },
+        "modules": [
+            "custom/hw-icon", // Always visible
+            "cpu",            // Hidden until hover
+            "memory",         // Hidden until hover
+            "temperature"     // Hidden until hover
+        ]
+    },
+    "custom/hw-icon": {
+        "format": "",
+        "tooltip": false
+    },
+    "cpu": {
+        "format": "CPU: {usage}%",
+        "interval": 2
+    },
+    "memory": {
+        "format": "RAM: {}%",
+        "interval": 2
+    },
+    "temperature": {
+        "format": "TEMP: {temperatureC}°C",
+        "interval": 2
+    },
+    "custom/warp": {
+        "interval": 2,
+        // Checks if warp is connected. Shows an orange cloud if connected, a crossed-out cloud if not.
+        "exec": "warp-cli status | grep -q 'Connected' && echo '' || echo '󰖂'",
+        "tooltip": false
+    },
+    "network": {
+        "format-wifi": "",
+        "format-ethernet": "󰈀",
+        "format-disconnected": "⚠",
+        "tooltip-format": "{essid} ({signalStrength}%)",
+        "on-click": "nm-connection-editor" // Opens GUI on click
+    },
+    "bluetooth": {
+        "format": "",
+        "format-connected": "󰂱",
+        "tooltip-format": "{controller_alias}\n{num_connections} connected",
+        "on-click": "blueman-manager" // Opens GUI on click
+    }
+}

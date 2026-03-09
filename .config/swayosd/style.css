@@ -1,0 +1,71 @@
+/* SwayOSD — Matugen themed
+ * Colors match ~/.config/waybar/colors.css
+ *   background:        #161311
+ *   surface_high:      #2d2927
+ *   primary:           #ddc1ae
+ *   on_primary:        #3e2d20
+ *   primary_container: #564334
+ *   foreground:        #e8e1de
+ *   outline:           #95908d
+ *   inactive:          #4a4644
+ */
+
+window#osd {
+    border-radius: 12px;
+    border: 1px solid #564334;
+    background: alpha(#2d2927, 0.92);
+    min-width: 160px;
+    max-width: 160px;
+}
+
+window#osd #container {
+    margin: 10px 14px;
+}
+
+window#osd image,
+window#osd label {
+    color: #ddc1ae;
+    min-width: 18px;
+    min-height: 18px;
+    -gtk-icon-size: 18px;
+    font-size: 12px;
+}
+
+window#osd progressbar:disabled,
+window#osd image:disabled {
+    opacity: 0.35;
+}
+
+/* Progress bar track */
+window#osd progressbar,
+window#osd segmentedprogress {
+    min-height: 4px;
+    border-radius: 999px;
+    background: transparent;
+    border: none;
+}
+
+window#osd trough,
+window#osd segment {
+    min-height: inherit;
+    border-radius: inherit;
+    border: none;
+    background: #4a4644;
+}
+
+/* Progress bar fill — primary color */
+window#osd progress,
+window#osd segment.active {
+    min-height: inherit;
+    border-radius: inherit;
+    border: none;
+    background: #ddc1ae;
+}
+
+window#osd segment {
+    margin-left: 6px;
+}
+
+window#osd segment:first-child {
+    margin-left: 0;
+}

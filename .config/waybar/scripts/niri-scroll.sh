@@ -1,0 +1,1 @@
+/home/kshinpad/.config/scripts/niri-scroll.sh

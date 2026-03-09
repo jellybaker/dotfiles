@@ -1,0 +1,182 @@
+@import url("colors.css");
+
+/* ═══════════════════════════════════════════════════════
+   GTKLOCK — Matugen themed lockscreen
+   Node names verified from gtklock 4.0.0 binary.
+   ═══════════════════════════════════════════════════════ */
+
+/* ── Dimming overlay — applied to window itself ─────── */
+window {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-color: alpha(#000000, 0.45);
+}
+
+/* window-box is a centered content container — must be transparent */
+#window-box {
+    background-color: transparent;
+}
+
+/* ── Clock — large, unfocused state ────────────────── */
+window #clock-label {
+    color: @foreground;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 96pt;
+    font-weight: 700;
+    letter-spacing: -3px;
+}
+
+/* ── Clock — shrinks when input form is revealed ───── */
+window.focused:not(.hidden) #clock-label {
+    font-size: 40pt;
+    color: @primary;
+}
+
+/* ── Date label ─────────────────────────────────────── */
+window #date-label {
+    color: alpha(@foreground, 0.65);
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 18px;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+
+window.focused:not(.hidden) #date-label {
+    font-size: 12pt;
+    margin-bottom: 8px;
+}
+
+/* ── Input form container ───────────────────────────── */
+#body-grid {
+    background-color: alpha(@surface_highest, 0.72);
+    border: 1px solid alpha(@outline, 0.35);
+    border-radius: 18px;
+    padding: 24px 28px;
+    margin-top: 12px;
+}
+
+/* ── "Password:" label ──────────────────────────────── */
+#input-label {
+    color: @on_inactive;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    margin-bottom: 4px;
+    margin-right: 8px;
+}
+
+/* ── Password entry ─────────────────────────────────── */
+#input-field {
+    background-color: alpha(@surface_container, 0.80);
+    border: 1px solid alpha(@outline, 0.45);
+    border-radius: 10px;
+    color: @primary;
+    caret-color: @primary;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 10px;
+    letter-spacing: 8px;
+    padding: 9px 14px;
+    min-width: 260px;
+}
+
+#input-field:focus {
+    border-color: @primary;
+    background-color: alpha(@surface_high, 0.90);
+    color: @primary;
+}
+
+/* ── Unlock button — hidden, Enter key works fine ───── */
+#unlock-button {
+    min-width: 0;
+    min-height: 0;
+    padding: 0;
+    margin: 0;
+    opacity: 0;
+}
+
+/* ── Error / warning labels ─────────────────────────── */
+#error-label {
+    color: @error;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+#warning-label {
+    color: @tertiary;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 11px;
+}
+
+/* ═══════════════════════════════════════════════════════
+   PLAYERCTL MODULE
+   ═══════════════════════════════════════════════════════ */
+
+#playerctl-box {
+    background-color: alpha(@surface_container, 0.65);
+    border: 1px solid alpha(@outline, 0.28);
+    border-radius: 14px;
+    padding: 12px 14px;
+    margin-top: 14px;
+    min-width: 300px;
+}
+
+/* Album art thumbnail */
+#album-art {
+    border-radius: 8px;
+    min-width: 48px;
+    min-height: 48px;
+    margin-right: 12px;
+}
+
+/* Track title */
+#title-label {
+    color: @foreground;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 13px;
+    font-weight: 600;
+}
+
+/* Artist */
+#artist-label {
+    color: @on_inactive;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 11px;
+}
+
+/* Album */
+#album-label {
+    color: @secondary;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 10px;
+}
+
+/* Playback control buttons */
+#prev-button,
+#next-button,
+#playback-status {
+    background-color: transparent;
+    border: none;
+    border-radius: 8px;
+    color: @primary;
+    padding: 4px 6px;
+    min-width: 28px;
+    min-height: 28px;
+}
+
+#playback-status {
+    background-color: alpha(@primary_container, 0.6);
+    border-radius: 50%;
+    padding: 6px;
+}
+
+#prev-button:hover,
+#next-button:hover {
+    background-color: alpha(@primary, 0.14);
+}
+
+#playback-status:hover {
+    background-color: alpha(@primary, 0.25);
+}
+

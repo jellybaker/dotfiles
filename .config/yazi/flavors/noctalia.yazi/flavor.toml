@@ -1,0 +1,170 @@
+# : Manager [[[
+
+[mgr]
+cwd = { fg = "#dfe4de" }
+
+# Tab
+tab_active = { fg = "#003824", bg = "#78d9ab", bold = true }
+tab_inactive = { fg = "#43a67b", bg = "#000000" }
+tab_width = 1
+
+# Find
+find_keyword = { fg = "#ffb4ab", bold = true, italic = true, underline = true }
+find_position = { fg = "#ffb4ab", bold = true, italic = true }
+
+# Marker
+marker_copied = { fg = "#868fde", bg = "#868fde" }
+marker_cut = { fg = "#868fde", bg = "#868fde" }
+marker_marked = { fg = "#ffb4ab", bg = "#ffb4ab" }
+marker_selected = { fg = "#bdc2ff", bg = "#bdc2ff" }
+
+# Count
+count_copied = { fg = "#000000", bg = "#868fde" }
+count_cut = { fg = "#000000", bg = "#868fde" }
+count_selected = { fg = "#003824", bg = "#bdc2ff" }
+
+# Border
+border_style  = { fg = "#78d9ab" }
+
+# : ]]]
+
+
+# : Status [[[
+
+[status]
+separator_style = { bg = "#003824", fg = "#F4A261" }
+
+[mode]
+# Mode
+normal_main = { bg = "#78d9ab", fg = "#003824", bold = true }
+normal_alt  = { bg = "#3e4942", fg = "#bdc9c0" }
+
+# Select mode
+select_main = { bg = "#a9cfb9", fg = "#143727", bold = true }
+select_alt  = { bg = "#3e4942", fg = "#bdc9c0" }
+
+# Unset mode
+unset_main = { bg = "#bdc2ff", fg = "#1f2871", bold = true }
+unset_alt  = { bg = "#3e4942", fg = "#bdc9c0" }
+
+# Progress
+progress_label = { bold = true }
+progress_normal = { fg = "#78d9ab", bg = "#0f1511" }
+progress_error = { fg = "#ffb4ab", bg = "#0f1511" }
+
+# Permissions
+permissions_t = { fg = "#a9cfb9" }
+permissions_w = { fg = "#bdc2ff" }
+permissions_x = { fg = "#ffb4ab" }
+permissions_r = { fg = "#868fde" }
+permissions_s = { fg = "#43a67b" }
+
+# : ]]]
+
+
+# : Select [[[
+
+[select]
+border = { fg = "#78d9ab" }
+active = { fg = "#bdc2ff", bold = true }
+
+# : ]]]
+
+
+# : Input [[[
+
+[input]
+border = { fg = "#78d9ab" }
+value = { fg = "#dfe4de" }
+
+# : ]]]
+
+# : Tabs [[[
+
+[tabs]
+active = { fg = "#78d9ab", bold = true, bg = "#0f1511" }
+inactive = { fg = "#a9cfb9", bg = "#0f1511" }
+sep_inner = { open = "[", close = "]" }
+
+# : ]]]
+
+
+# : Completion [[[
+
+[completion]
+border = { fg = "#78d9ab", bg = "#003824" }
+
+# : ]]]
+
+
+# : Tasks [[[
+
+[tasks]
+border = { fg = "#78d9ab" }
+title = {}
+hovered = { fg = "#868fde", underline = true }
+
+# : ]]]
+
+
+# : Which [[[
+
+[which]
+cols = 3
+mask = { bg = "#0f1511" }
+cand = { fg = "#78d9ab" }
+rest = { fg = "#003824" }
+desc = { fg = "#dfe4de" }
+separator = " ▶ "
+separator_style = { fg = "#dfe4de" }
+
+# : ]]]
+
+
+# : Help [[[
+
+[help]
+on = { fg = "#dfe4de" }
+run = { fg = "#dfe4de" }
+footer = { fg = "#143727", bg = "#a9cfb9" }
+
+# : ]]]
+
+
+# : Notify [[[
+
+[notify]
+title_info = { fg = "#bdc2ff" }
+title_warn = { fg = "#78d9ab" }
+title_error = { fg = "#ffb4ab" }
+
+# : ]]]
+
+
+# : File-specific styles [[[
+
+[filetype]
+
+rules = [
+    # Images
+    { mime = "image/*", fg = "#94e2d5" },
+
+    # Media
+    { mime = "{audio,video}/*", fg = "#f9e2af" },
+
+    # Archives
+    { mime = "application/{zip,rar,7z*,tar,gzip,xz,zstd,bzip*,lzma,compress,archive,cpio,arj,xar,ms-cab*}", fg = "#f5c2e7" },
+
+    # Documents
+    { mime = "application/{pdf,doc,rtf}", fg = "#a6e3a1" },
+
+    # Special files
+    { name = "*", is = "orphan", bg = "#93000a" },
+    { name = "*", is = "exec", fg = "#ffdad6" },
+
+    # Fallback
+    { name = "*", fg = "#dfe4de" },
+    { name = "*/", fg = "#78d9ab" },
+]
+
+# : ]]]

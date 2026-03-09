@@ -1,0 +1,206 @@
+@import url("colors.css");
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+    font-size: 14px;
+    border: none;
+    border-radius: 0;
+    min-height: 0;
+    margin: 0;
+    padding: 0;
+}
+
+window#waybar {
+    background-color: @background;
+    color: @foreground;
+}
+
+/* ── Consistent module padding (all equal) ─────────── */
+#custom-workspaces,
+#custom-warp,
+#custom-net-icon,
+#bluetooth,
+#battery,
+#clock {
+    padding: 0 10px;
+}
+
+/* Cava is dense bars — tighter sides */
+#custom-cava {
+    padding: 0 10px;
+}
+
+.modules-left  { padding-left: 8px; }
+.modules-right { padding-right: 8px; }
+
+/* ── Left: Workspaces x/y ──────────────────────────── */
+#custom-workspaces {
+    color: @primary;
+    font-weight: 600;
+    letter-spacing: 1px;
+}
+
+/* ── Left: Taskbar (niri-taskbar CFFI) ─────────────── */
+.niri-taskbar {
+    padding: 0 4px;
+}
+
+.niri-taskbar button {
+    padding: 0 3px;
+    min-width: 0;
+    background: transparent;
+    border-radius: 4px;
+}
+
+.niri-taskbar button image {
+    min-width: 14px;
+    min-height: 14px;
+}
+
+.niri-taskbar button:hover {
+    background: alpha(@foreground, 0.18);
+}
+
+.niri-taskbar button.focused {
+    background: alpha(@primary, 0.30);
+}
+
+.niri-taskbar button label {
+    color: transparent;
+    font-size: 0;
+}
+
+/* ── Center: Cava visualizer ───────────────────────── */
+#custom-cava {
+    color: @primary;
+    font-size: 12px;
+    letter-spacing: 1px;
+}
+
+/* ── Center: Media player ──────────────────────────── */
+/* surface_highest = most elevated surface, always distinct from bar background.
+   foreground = on_surface, always readable on any surface in light or dark mode. */
+#custom-media {
+    background-color: @surface_highest;
+    border: 1px solid @outline;
+    border-radius: 8px;
+    padding: 0 14px;
+    min-width: 40px;
+    color: @foreground;
+}
+
+#custom-media:hover {
+    border-color: @primary;
+}
+
+#custom-media.playing {
+    color: @foreground;
+    border-color: @primary;
+}
+#custom-media.paused  { color: @on_inactive; border-color: @outline; }
+#custom-media.stopped { color: @on_inactive; opacity: 0.5; border-color: @inactive; }
+
+/* ── Right: Sysinfo group ─────────────────────────── */
+#group-sysinfo {
+    background-color: @primary_container;
+    border-radius: 8px;
+    padding: 0 4px;
+    margin: 3px 6px 3px 0;
+}
+
+#custom-system {
+    color: @on_primary_container;
+    padding: 0 8px 0 6px;
+}
+
+#custom-system:hover {
+    color: @primary;
+}
+
+#cpu,
+#memory,
+#temperature {
+    color: @on_primary_container;
+    padding: 0 6px;
+}
+
+#temperature.critical {
+    color: @error;
+}
+
+/* ── Right: WARP — matugen primary color ───────────── */
+#custom-warp {
+    color: @primary;
+}
+
+#custom-warp.disconnected {
+    color: @inactive;
+}
+
+/* ── Right: Network icon — matugen colored ──────────── */
+#custom-net-icon {
+    color: @primary;
+}
+
+#custom-net-icon.disabled,
+#custom-net-icon.disconnected {
+    color: @inactive;
+}
+
+/* ── Right: Battery ────────────────────────────────── */
+#battery {
+    color: @primary;
+}
+
+#battery.charging,
+#battery.plugged {
+    color: @secondary;
+}
+
+#battery.warning {
+    color: @warning;
+}
+
+#battery.critical:not(.charging) {
+    color: @error;
+    animation-name: blink;
+    animation-duration: 1s;
+    animation-timing-function: linear;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+}
+
+@keyframes blink {
+    to { color: @primary; }
+}
+
+/* ── Right: Clock ──────────────────────────────────── */
+#clock {
+    color: @primary;
+    font-weight: 500;
+    padding: 0px;  
+}
+
+/* ── Right: Tray ───────────────────────────────────── */
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
+
+}
+
+/* ── Right: Bluetooth ───────────────────────────────── */
+#bluetooth {
+    color: @primary;
+}
+
+#bluetooth.connected {
+    color: @secondary;
+}
+
+#bluetooth.disabled {
+    color: @inactive;
+}
+

@@ -1,0 +1,8 @@
+[templates.waybar]
+input_path = '~/.config/matugen/templates/waybar.css'
+output_path = '~/.config/waybar/colors.css'
+post_hook = 'pkill -SIGUSR2 waybar'
+
+[templates.niri]
+input_path = '~/.config/matugen/templates/niri.kdl'
+output_path = '~/.config/niri/colors.kdl'

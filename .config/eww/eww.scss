@@ -1,0 +1,192 @@
+// eww.scss — Styles for eww popup panels
+// Colors are read from waybar colors.css via shell to stay in sync with matugen.
+// Popup panels: wifi-popup, bt-popup, battery-popup
+
+// ---------- Color definitions (kept in sync with matugen/waybar palette) ----------
+// These are updated by the matugen post-hook (waybar SIGUSR2 is sent after regen).
+// We read from /proc or define here; eww variables handle the dynamic part.
+
+* {
+    font-family: "JetBrainsMono Nerd Font", "FiraCode Nerd Font", monospace;
+    font-size: 13px;
+}
+
+// ---------- Base popup panel ----------
+.popup-panel {
+    background: transparent;
+}
+
+.popup-box {
+    background-color: rgba(18, 19, 24, 0.92);
+    border: 1px solid rgba(174, 198, 255, 0.25);
+    border-radius: 12px;
+    padding: 14px 16px;
+    min-width: 280px;
+    color: #e2e2e9;
+}
+
+// ---------- Section headers ----------
+.section-header {
+    font-size: 11px;
+    color: #8e9099;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 6px;
+    padding-bottom: 4px;
+    border-bottom: 1px solid rgba(174, 198, 255, 0.12);
+}
+
+// ---------- Toggle row ----------
+.toggle-row {
+    padding: 6px 0;
+    margin-bottom: 8px;
+}
+
+.toggle-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #e2e2e9;
+}
+
+.toggle-sublabel {
+    font-size: 11px;
+    color: #8e9099;
+}
+
+// eww toggle widget
+.toggle-switch {
+    min-width: 44px;
+    min-height: 22px;
+}
+
+// ---------- Network / BT list items ----------
+.net-item, .bt-item {
+    padding: 7px 8px;
+    border-radius: 8px;
+    transition: background 150ms;
+}
+
+.net-item:hover, .bt-item:hover {
+    background-color: rgba(174, 198, 255, 0.10);
+}
+
+.net-item.connected, .bt-item.connected {
+    background-color: rgba(174, 198, 255, 0.15);
+}
+
+.net-icon, .bt-icon {
+    font-size: 16px;
+    min-width: 22px;
+    color: #aec6ff;
+}
+
+.net-ssid, .bt-name {
+    font-size: 13px;
+    color: #e2e2e9;
+}
+
+.net-signal, .bt-status {
+    font-size: 11px;
+    color: #8e9099;
+}
+
+.connected-badge {
+    color: #aec6ff;
+    font-size: 11px;
+}
+
+.net-connect-btn, .bt-connect-btn {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(174, 198, 255, 0.18);
+    color: #aec6ff;
+    font-size: 11px;
+    border: none;
+    cursor: pointer;
+}
+
+.net-connect-btn:hover, .bt-connect-btn:hover {
+    background: rgba(174, 198, 255, 0.28);
+}
+
+.net-disconnect-btn, .bt-disconnect-btn {
+    padding: 3px 10px;
+    border-radius: 6px;
+    background: rgba(255, 180, 171, 0.15);
+    color: #ffb4ab;
+    font-size: 11px;
+    border: none;
+    cursor: pointer;
+}
+
+// ---------- Battery popup ----------
+.battery-big-icon {
+    font-size: 36px;
+    color: #aec6ff;
+}
+
+.battery-percent {
+    font-size: 28px;
+    font-weight: 700;
+    color: #e2e2e9;
+}
+
+.battery-status {
+    font-size: 12px;
+    color: #8e9099;
+}
+
+.battery-time {
+    font-size: 12px;
+    color: #bfc6dc;
+}
+
+// Power profile buttons
+.profile-btn {
+    padding: 8px 14px;
+    border-radius: 8px;
+    background: rgba(174, 198, 255, 0.10);
+    color: #e2e2e9;
+    font-size: 12px;
+    border: 1px solid rgba(174, 198, 255, 0.15);
+    min-width: 90px;
+    cursor: pointer;
+}
+
+.profile-btn:hover {
+    background: rgba(174, 198, 255, 0.20);
+}
+
+.profile-btn.active {
+    background: rgba(174, 198, 255, 0.30);
+    border-color: #aec6ff;
+    color: #aec6ff;
+    font-weight: 600;
+}
+
+.profile-perf  { }
+.profile-bal   { }
+.profile-save  { }
+
+// ---------- Divider ----------
+.divider {
+    background: rgba(174, 198, 255, 0.12);
+    min-height: 1px;
+    margin: 8px 0;
+}
+
+// ---------- Rescan / refresh button ----------
+.action-btn {
+    padding: 4px 12px;
+    border-radius: 6px;
+    background: transparent;
+    color: #8e9099;
+    font-size: 11px;
+    border: 1px solid rgba(174, 198, 255, 0.15);
+    cursor: pointer;
+}
+
+.action-btn:hover {
+    background: rgba(174, 198, 255, 0.10);
+    color: #e2e2e9;
+}

@@ -1,0 +1,50 @@
+[config]
+
+[templates.waybar]
+input_path  = '~/.config/matugen/templates/waybar.css'
+output_path = '~/.config/waybar/colors.css'
+post_hook   = 'pkill -SIGUSR2 waybar'
+
+[templates.niri]
+input_path  = '~/.config/matugen/templates/niri.kdl'
+output_path = '~/.config/niri/colors.kdl'
+post_hook   = 'niri msg action do-screen-transition || true'
+
+[templates.alacritty]
+input_path  = '~/.config/matugen/templates/alacritty.toml'
+output_path = '~/.config/alacritty/themes/matugen.toml'
+
+[templates.foot]
+input_path  = '~/.config/matugen/templates/foot.ini'
+output_path = '~/.config/foot/themes/matugen'
+
+[templates.gtk]
+input_path  = '~/.config/matugen/templates/gtk.css'
+output_path = '~/.config/gtk-3.0/gtk.css'
+post_hook   = 'pkill -HUP gsd-xsettings || true'
+
+[templates.fuzzel]
+input_path  = '~/.config/matugen/templates/fuzzel.ini'
+output_path = '~/.config/fuzzel/themes/matugen'
+
+[templates.cava]
+input_path  = '~/.config/matugen/templates/cava.ini'
+output_path = '~/.config/cava/themes/matugen'
+post_hook   = 'pkill -x cava || true'
+
+[templates.starship]
+input_path  = '~/.config/matugen/templates/starship.toml'
+output_path = '~/.config/starship.toml'
+
+[templates.zsh_colors]
+input_path  = '~/.config/matugen/templates/zsh_colors.sh'
+output_path = '~/.config/matugen/zsh_colors.sh'
+
+[templates.dunst]
+input_path  = '~/.config/matugen/templates/dunst.ini'
+output_path = '~/.config/dunst/dunstrc'
+post_hook   = 'systemctl --user restart dunst'
+
+[templates.gtklock]
+input_path  = '~/.config/matugen/templates/gtklock.css'
+output_path = '~/.config/gtklock/colors.css'

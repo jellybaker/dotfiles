@@ -1,0 +1,166 @@
+{
+    "layer": "top",
+    "position": "top",
+    "height": 26,
+    "spacing": 0,
+    "margin-top": 0,
+    "margin-left": 0,
+    "margin-right": 0,
+
+    "modules-left": [
+        "custom/workspaces",
+        "cffi/niri-taskbar",
+	"niri/window#col"
+    ],
+    "modules-center": [
+        "custom/cava",
+        "custom/media"
+    ],
+    "modules-right": [
+        "group/sysinfo",
+	"custom/warp",
+        "custom/net-icon",
+        "bluetooth",
+        "battery",
+        "clock"
+    ],
+
+    // --- LEFT ---
+
+    "custom/workspaces": {
+        "exec": "~/.config/waybar/scripts/workspaces.sh",
+        "return-type": "text",
+        "format": "{}",
+        "tooltip": false
+    },
+
+    "cffi/niri-taskbar": {
+        "module_path": "/usr/lib/waybar/libniri_taskbar.so"
+    },
+	
+    "niri/window#col":{
+	"separate-outputs": true,
+    	"format":"{col}/{max_col}"
+    },
+
+    // --- CENTER ---
+
+    "custom/cava": {
+        "exec": "~/.config/waybar/scripts/cava.sh",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": false
+    },
+
+    "custom/media": {
+        "exec": "~/.config/waybar/scripts/media.sh",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+
+    // --- RIGHT ---
+
+    "clock": {
+        "format": "  {:%H:%M}",
+        "format-alt": "  {:%a %d %b}",
+        "tooltip-format": "<tt><small>{calendar}</small></tt>"
+    },
+
+    // Combined CPU + RAM — shows chip icon, hover reveals stats
+    "custom/sysinfo": {
+        "exec": "~/.config/waybar/scripts/sysinfo.sh",
+        "return-type": "json",
+        "format": "{}",
+        "tooltip": true
+    },
+
+    "battery": {
+        "bat": "BAT1",
+        "interval": 30,
+        "format": "{icon} {capacity}%",
+        "format-charging": "󰂄 {capacity}%",
+        "format-plugged": "󰚥 {capacity}%",
+        "format-icons": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰁿", "󰂀", "󰂁", "󰂂", "󰁹"],
+        "states": { "warning": 25, "critical": 10 },
+        "tooltip": true,
+        "tooltip-format": "{timeTo}"
+    },
+
+    "tray": {
+        "spacing": 6,
+        "show-passive-items": true
+    },
+
+    // Cloudflare WARP
+    "custom/warp": {
+        "interval": 3,
+        "exec": "warp-cli status 2>/dev/null | grep -q 'Connected' && echo '{\"text\":\"\",\"class\":\"connected\"}' || echo '{\"text\":\"\",\"class\":\"disconnected\"}'",
+        "return-type": "json",
+        "tooltip": false,
+        "on-click": "warp-cli connect",
+        "on-right-click": "warp-cli disconnect"
+    },
+
+    // Network icon — click opens fuzzel network menu
+    "custom/net-icon": {
+        "interval": 5,
+        "exec": "~/.config/waybar/scripts/net-icon.sh",
+        "return-type": "json",
+        "on-click": "~/.config/scripts/net-menu.sh"
+    },
+
+    // Bluetooth icon — click opens blueman-manager
+    "bluetooth": {
+    "format": "",
+    "format-connected": " {device_alias}",
+    "format-disabled": "󰂲",
+    "tooltip-format": "{controller_alias}\t{controller_address}",
+    "tooltip-format-connected": "{controller_alias}\t{controller_address}\n\n{device_enumerate}",
+    "tooltip-format-enumerate-connected": "{device_alias}\t{device_address}",
+    "on-click":"blueman-manager"
+	
+    },
+
+    "group/sysinfo": {
+    "orientation": "inherit",
+    "drawer": {
+        "transition-duration": 500,
+        "children-class": "system-info-child",
+        "transition-left-to-right": false
+    },
+    "modules": [
+        "custom/system", // This acts as the visible handle
+        "cpu",           // These slide out on hover
+        "memory",
+        "temperature"
+   	 ]
+	
+    },
+    "custom/system": {
+    	"format": "",
+    	"tooltip": false
+    },
+
+
+    "cpu": {
+    	"format": "  {usage}%",
+	"tooltip": false
+    },
+
+
+    "memory": {
+	    "format": "  {}%"
+    },
+
+
+    "temperature": {
+    
+	    "critical-threshold": 80,
+	    "format": "  {temperatureC}°C"
+
+    }
+}

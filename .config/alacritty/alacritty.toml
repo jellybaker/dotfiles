@@ -1,0 +1,20 @@
+[general]
+import = ["themes/matugen.toml"]
+
+[window]
+opacity=0.6
+blur=true
+padding={x=10, y=10}
+
+[font]
+offset={x=0,y=1}
+
+[cursor]
+style={shape="Beam", blinking="On"}
+thickness=0.3
+blink_interval=700
+blink_timeout=10
+unfocused_hollow=false
+
+[env]
+TERM="alacritty"

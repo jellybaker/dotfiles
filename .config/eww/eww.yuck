@@ -1,0 +1,183 @@
+;;;; eww.yuck — eww popup panels for WiFi, Bluetooth, and Battery
+;;;; Panels are toggled by waybar modules via: eww open --toggle <window-name>
+
+;; ────────────────────────────────────────────────
+;; Variables
+;; ────────────────────────────────────────────────
+
+(defpoll wifi-list :interval "5s"
+  `~/.config/eww/scripts/wifi-list.sh`)
+
+(defpoll wifi-status :interval "3s"
+  `~/.config/eww/scripts/wifi-connect.sh status`)
+
+(defpoll bt-list :interval "5s"
+  `~/.config/eww/scripts/bt-list.sh`)
+
+(defpoll bt-status :interval "3s"
+  `~/.config/eww/scripts/bt-toggle.sh status`)
+
+(defpoll battery-info :interval "10s"
+  `~/.config/eww/scripts/battery-info.sh`)
+
+(defpoll cpu-governor :interval "5s"
+  `~/.config/eww/scripts/cpu-governor.sh get`)
+
+;; ────────────────────────────────────────────────
+;; Shared Widgets
+;; ────────────────────────────────────────────────
+
+(defwidget divider []
+  (box :class "divider"))
+
+;; ────────────────────────────────────────────────
+;; WiFi Popup
+;; ────────────────────────────────────────────────
+
+(defwidget wifi-net-item [net]
+  (box :orientation "h" :space-evenly false :spacing 8
+       :class {jq(net, ".connected") == true ? "net-item connected" : "net-item"}
+    (label :text {jq(net, ".icon")} :class "net-icon")
+    (box :orientation "v" :space-evenly false :hexpand true
+      (label :text {jq(net, ".ssid")} :class "net-ssid" :halign "start" :xalign 0)
+      (label :text {jq(net, ".signal_pct")} :class "net-signal" :halign "start" :xalign 0))
+    (button
+      :visible {jq(net, ".connected") == true}
+      :class "net-disconnect-btn"
+      :onclick `~/.config/eww/scripts/wifi-connect.sh disconnect`
+      "Disconnect")
+    (button
+      :visible {jq(net, ".connected") == false}
+      :class "net-connect-btn"
+      :onclick `~/.config/eww/scripts/wifi-connect.sh connect "${jq(net, ".ssid")}"`
+      "Connect")))
+
+(defwidget wifi-popup-content []
+  (box :orientation "v" :space-evenly false :spacing 6 :class "popup-box"
+    ;; Header row with toggle
+    (box :orientation "h" :space-evenly false :spacing 8 :class "toggle-row"
+      (label :text "󰤨" :class "net-icon")
+      (box :orientation "v" :space-evenly false :hexpand true
+        (label :text "WiFi" :class "toggle-label" :halign "start" :xalign 0)
+        (label :text {jq(wifi-status, ".ssid")}
+               :class "toggle-sublabel" :halign "start" :xalign 0))
+      (button :class "action-btn"
+              :onclick `~/.config/eww/scripts/wifi-connect.sh toggle`
+              {jq(wifi-status, ".enabled") == true ? "Disable" : "Enable"}))
+    (divider)
+    (label :text "AVAILABLE NETWORKS" :class "section-header" :halign "start" :xalign 0)
+    (scroll :height 240 :vscroll true
+      (box :orientation "v" :spacing 2 :space-evenly false
+        (for net in wifi-list
+          (wifi-net-item :net net))))
+    (divider)
+    (box :halign "end"
+      (button :class "action-btn"
+              :onclick `~/.config/eww/scripts/wifi-list.sh rescan &`
+              "⟳ Rescan"))))
+
+(defwindow wifi-popup
+  :monitor 0
+  :geometry (geometry :width "320px" :height "420px"
+                      :anchor "top right"
+                      :x "16px" :y "40px")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (box :class "popup-panel"
+    (wifi-popup-content)))
+
+;; ────────────────────────────────────────────────
+;; Bluetooth Popup
+;; ────────────────────────────────────────────────
+
+(defwidget bt-device-item [dev]
+  (box :orientation "h" :space-evenly false :spacing 8
+       :class {jq(dev, ".connected") == true ? "bt-item connected" : "bt-item"}
+    (label :text {jq(dev, ".icon")} :class "bt-icon")
+    (box :orientation "v" :space-evenly false :hexpand true
+      (label :text {jq(dev, ".name")} :class "bt-name" :halign "start" :xalign 0)
+      (label :text {jq(dev, ".connected") == true ? "Connected" : "Paired"}
+             :class {jq(dev, ".connected") == true ? "connected-badge" : "bt-status"}
+             :halign "start" :xalign 0))
+    (button
+      :visible {jq(dev, ".connected") == true}
+      :class "bt-disconnect-btn"
+      :onclick `~/.config/eww/scripts/bt-toggle.sh disconnect "${jq(dev, ".mac")}"`
+      "Disconnect")
+    (button
+      :visible {jq(dev, ".connected") == false}
+      :class "bt-connect-btn"
+      :onclick `~/.config/eww/scripts/bt-toggle.sh connect "${jq(dev, ".mac")}"`
+      "Connect")))
+
+(defwidget bt-popup-content []
+  (box :orientation "v" :space-evenly false :spacing 6 :class "popup-box"
+    ;; Header row with power toggle
+    (box :orientation "h" :space-evenly false :spacing 8 :class "toggle-row"
+      (label :text "" :class "bt-icon")
+      (box :orientation "v" :space-evenly false :hexpand true
+        (label :text "Bluetooth" :class "toggle-label" :halign "start" :xalign 0)
+        (label :text {jq(bt-status, ".enabled") == true ? "On" : "Off"}
+               :class "toggle-sublabel" :halign "start" :xalign 0))
+      (button :class "action-btn"
+              :onclick `~/.config/eww/scripts/bt-toggle.sh power`
+              {jq(bt-status, ".enabled") == true ? "Turn Off" : "Turn On"}))
+    (divider)
+    (label :text "PAIRED DEVICES" :class "section-header" :halign "start" :xalign 0)
+    (scroll :height 200 :vscroll true
+      (box :orientation "v" :spacing 2 :space-evenly false
+        (for dev in bt-list
+          (bt-device-item :dev dev))))
+    (label :visible {arraylength(bt-list) == 0} :text "No paired devices"
+           :class "bt-status" :halign "center")))
+
+(defwindow bt-popup
+  :monitor 0
+  :geometry (geometry :width "300px" :height "320px"
+                      :anchor "top right"
+                      :x "16px" :y "40px")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (box :class "popup-panel"
+    (bt-popup-content)))
+
+;; ────────────────────────────────────────────────
+;; Battery / Power Profile Popup
+;; ────────────────────────────────────────────────
+
+(defwidget battery-popup-content []
+  (box :orientation "v" :space-evenly false :spacing 10 :class "popup-box"
+    ;; Big battery status
+    (box :orientation "h" :space-evenly false :spacing 16 :halign "center"
+      (label :text {jq(battery-info, ".icon")} :class "battery-big-icon")
+      (box :orientation "v" :space-evenly false :halign "start"
+        (label :text {jq(battery-info, ".percent_str")} :class "battery-percent")
+        (label :text {jq(battery-info, ".status")} :class "battery-status")
+        (label :text {jq(battery-info, ".time_remaining")} :class "battery-time")))
+    (divider)
+    ;; Power profile buttons
+    (label :text "CPU POWER PROFILE" :class "section-header" :halign "start" :xalign 0)
+    (box :orientation "h" :space-evenly true :spacing 6
+      (button
+        :class {cpu-governor == "performance" ? "profile-btn profile-perf active" : "profile-btn profile-perf"}
+        :onclick `~/.config/eww/scripts/cpu-governor.sh set performance`
+        "⚡ Performance")
+      (button
+        :class {cpu-governor == "powersave" ? "profile-btn profile-save active" : "profile-btn profile-save"}
+        :onclick `~/.config/eww/scripts/cpu-governor.sh set powersave`
+        "🍃 Power Save"))
+    (label :text "Note: run install-cpu-governor.sh once to enable profile switching"
+           :class "battery-status" :halign "center" :visible {cpu-governor == "unknown"})))
+
+(defwindow battery-popup
+  :monitor 0
+  :geometry (geometry :width "300px" :height "260px"
+                      :anchor "top right"
+                      :x "16px" :y "40px")
+  :stacking "overlay"
+  :exclusive false
+  :focusable true
+  (box :class "popup-panel"
+    (battery-popup-content)))
